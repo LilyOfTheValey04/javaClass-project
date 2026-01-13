@@ -1,4 +1,4 @@
-package com;
+package com.exception;
 
 import lombok.NonNull;
 import org.springframework.http.HttpStatus;
