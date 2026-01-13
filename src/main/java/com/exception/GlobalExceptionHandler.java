@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
-import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -26,13 +25,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFound.class)
     public ProblemDetail handleNotFound(ResourceNotFound ex, HttpServletRequest req) {
         ProblemDetail problemDetail = ex.getBody();
-        problemDetail.setInstance(URI.create(req.getRequestURI()));
-        return problemDetail;
-    }
-
-    @ExceptionHandler(AuthorizationDeniedException.class)
-    public ProblemDetail handleAuthorisationDenied(AuthorizationDeniedException ex, HttpServletRequest req) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN,"Unauthorised");
         problemDetail.setInstance(URI.create(req.getRequestURI()));
         return problemDetail;
     }
