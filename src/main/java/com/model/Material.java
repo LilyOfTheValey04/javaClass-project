@@ -1,10 +1,15 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -16,4 +21,33 @@ public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    @JsonManagedReference
+    private User owner;
+
+    @Column(length = 2000)
+    private String description;
+
+    private String author;
+
+    private Double price;
+
+    private Integer quantity;
+
+    @OneToMany
+    @JoinColumn(name = "review_id")
+    @JsonBackReference
+    private Set<Review> reviews = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "material_category",
+            joinColumns = @JoinColumn(name = "material_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<Category> categories = new HashSet<>();
 }
