@@ -25,7 +25,7 @@ public class MaterialService {
 
     public Material getMaterialById(Long id) {
         return materialRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFound(Review.class, id));
+                .orElseThrow(() -> new ResourceNotFound(Material.class, id));
     }
 
     public List<Material> getAllMaterials() {
