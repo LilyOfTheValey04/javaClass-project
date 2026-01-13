@@ -1,5 +1,7 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,11 +26,11 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "material_id")
-    @JsonManagedReference
+    @JsonBackReference
     private Material material;
 
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties({"passwordHash"})
     private User user;
 }

@@ -1,8 +1,6 @@
 package com.mapper;
 
-import com.dto.material.MaterialCreateRequsetDTO;
 import com.dto.review.ReviewCreateRequestDTO;
-import com.model.Material;
 import com.model.Review;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

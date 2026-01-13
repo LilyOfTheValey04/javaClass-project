@@ -42,7 +42,7 @@ public class Material {
 
     @OneToMany
     @JoinColumn(name = "review_id")
-    @JsonBackReference
+    @JsonManagedReference
     private Set<Review> reviews = new HashSet<>();
 
     @ManyToMany

@@ -1,6 +1,6 @@
 package com.mapper;
 
-import com.dto.material.MaterialCreateRequsetDTO;
+import com.dto.material.MaterialCreateRequestDTO;
 import com.model.Material;
 import org.mapstruct.*;
 
@@ -12,5 +12,5 @@ public interface MaterialMapper {
     @Mapping(target = "reviews", ignore = true)
     @Mapping(target = "owner", ignore = true)
     @Mapping(target = "categories", ignore = true)
-    Material toMaterial(MaterialCreateRequsetDTO materialCreateRequsetDTO);
+    Material toMaterial(MaterialCreateRequestDTO materialCreateRequestDTO);
 }

@@ -1,11 +1,10 @@
 package com.service;
 
+import com.dto.material.MaterialCreateRequestDTO;
 import com.exception.ResourceNotFound;
-import com.dto.material.MaterialCreateRequsetDTO;
 import com.mapper.MaterialMapper;
 import com.model.Category;
 import com.model.Material;
-import com.model.Review;
 import com.repository.MaterialRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,7 @@ public class MaterialService {
     }
 
     @Transactional
-    public Material createMaterial(MaterialCreateRequsetDTO materialCreateRequestDTO) {
+    public Material createMaterial(MaterialCreateRequestDTO materialCreateRequestDTO) {
         Material material = materialMapper.toMaterial(materialCreateRequestDTO);
         Set<String> categoryNames = materialCreateRequestDTO.categoryNames();
 
