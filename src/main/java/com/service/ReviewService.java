@@ -1,6 +1,6 @@
 package com.service;
 
-import com.ResourceNotFound;
+import com.exception.ResourceNotFound;
 import com.dto.review.ReviewCreateRequestDTO;
 import com.mapper.ReviewMapper;
 import com.model.Review;

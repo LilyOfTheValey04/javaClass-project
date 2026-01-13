@@ -1,6 +1,6 @@
 package com.service;
 
-import com.ResourceNotFound;
+import com.exception.ResourceNotFound;
 import com.dto.material.MaterialCreateRequsetDTO;
 import com.mapper.MaterialMapper;
 import com.model.Category;

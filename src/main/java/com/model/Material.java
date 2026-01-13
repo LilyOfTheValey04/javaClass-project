@@ -22,6 +22,8 @@ public class Material {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private boolean deleted = false;
+
     private String name;
 
     @ManyToOne
