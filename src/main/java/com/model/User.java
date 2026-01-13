@@ -2,6 +2,7 @@ package com.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,5 +40,8 @@ public class User {
     @Column(name = "password_hash")
     private String passwordHash;
 
-
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    @JsonManagedReference
+    private User owner;
 }
