@@ -20,7 +20,7 @@ public class Category {
 
     private String name;
 
-    @ManyToMany(mappedBy = "category")
+    @ManyToMany(mappedBy = "categories")
     @JsonIgnore
     private Set<Material> materials;
 }
