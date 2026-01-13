@@ -6,7 +6,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 
 import java.util.Set;
 
-public record MaterialCreateRequsetDTO(String name,
+public record MaterialCreateRequestDTO(String name,
                                        String description,
                                        @NotNull @Positive Double price,
                                        @NotNull @PositiveOrZero Integer quantity,
