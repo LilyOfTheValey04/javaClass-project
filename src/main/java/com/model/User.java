@@ -4,17 +4,18 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
+@SQLDelete(sql = "UPDATE users SET deleted = true WHERE id = ?")
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
@@ -25,6 +26,8 @@ public class User {
 
     @Column(name = "is_admin")
     private boolean admin;
+
+    private boolean deleted =false;
 
     @Column(unique = true)
     private String username;
@@ -40,8 +43,8 @@ public class User {
     @Column(name = "password_hash")
     private String passwordHash;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    @JsonManagedReference
-    private User owner;
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    @JsonBackReference
+    @SQLRestriction("deleted = false")
+    private Set<Material> materials = new HashSet<>();
 }
