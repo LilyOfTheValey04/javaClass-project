@@ -14,7 +14,7 @@ import java.util.Set;
 public interface MaterialRepository extends JpaRepository<Material, Long> {
     List<Material> findAllByOwnerId(Long ownerId);
 
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("""
             UPDATE Material m
             SET m.quantity = m.quantity - :amount
