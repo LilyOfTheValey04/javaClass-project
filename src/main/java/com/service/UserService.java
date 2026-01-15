@@ -28,7 +28,6 @@ public class UserService {
                 .phoneNumber(request.phoneNumber())
                 .isAdmin(false) // default
                 .deleted(false)
-                // passwordHash трябва да се хешира, тук го оставям директно за пример
                 .passwordHash(request.password())
                 .build();
 
@@ -65,7 +64,13 @@ public class UserService {
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound(User.class, id));
-        userRepository.delete(user);
+
+        //  soft delete materials
+        user.getMaterials().forEach(material -> material.setDeleted(true));
+
+        //  soft delete user
+        user.setDeleted(true);
+
     }
 
 
