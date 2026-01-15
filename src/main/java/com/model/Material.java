@@ -3,17 +3,17 @@ package com.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,9 +27,9 @@ public class Material {
 
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
-    @JsonManagedReference
+    @JsonBackReference
     private User owner;
 
     @Column(length = 2000)
@@ -41,12 +41,16 @@ public class Material {
 
     private Integer quantity;
 
-    @OneToMany
-    @JoinColumn(name = "review_id")
+    @OneToMany(
+            mappedBy = "material",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     @JsonManagedReference
     private Set<Review> reviews = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "material_category",
             joinColumns = @JoinColumn(name = "material_id"),

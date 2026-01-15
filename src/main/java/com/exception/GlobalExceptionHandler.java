@@ -2,6 +2,8 @@ package com.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,6 +19,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     private final View error;
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     public GlobalExceptionHandler(View error) {
         this.error = error;
@@ -24,8 +27,20 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFound.class)
     public ProblemDetail handleNotFound(ResourceNotFound ex, HttpServletRequest req) {
-        ProblemDetail problemDetail = ex.getBody();
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
         problemDetail.setInstance(URI.create(req.getRequestURI()));
+        problemDetail.setTitle("Resource Not Found");
+        return problemDetail;
+    }
+
+    @ExceptionHandler(InsufficientQuantityException.class)
+    public ProblemDetail handleInsufficientQuantity(InsufficientQuantityException ex, HttpServletRequest req) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problemDetail.setInstance(URI.create(req.getRequestURI()));
+        problemDetail.setTitle("Insufficient Quantity");
+        if (ex.getBody() != null) {
+            problemDetail.setProperty("details", ex.getBody().getProperties());
+        }
         return problemDetail;
     }
 
@@ -70,7 +85,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleAllException (Exception ex, HttpServletRequest req){
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected exception occurred");
+        ex.printStackTrace();
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                "Unexpected exception occurred");
         problemDetail.setInstance(URI.create(req.getRequestURI()));
         problemDetail.setTitle("Internal Server Error");
         return  problemDetail;
