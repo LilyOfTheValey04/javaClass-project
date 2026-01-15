@@ -11,8 +11,9 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserMapper {
     @Mapping(target = "materials", source = "materials")
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "id", source = "id")
     @Mapping(target = "admin", constant = "false")
+    @Mapping(target = "isDeleted", source = "deleted")
 
     UserResponseDTO toUserResponseDTO(User user);
 

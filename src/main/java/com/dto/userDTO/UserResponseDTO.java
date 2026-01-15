@@ -10,6 +10,7 @@ public record UserResponseDTO(Long id,
                               String name,
                               String email,
                               String phoneNumber,
+                              boolean isDeleted,
                               List<MaterialSummaryDTO>materials
                              ){
 }
