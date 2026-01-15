@@ -29,6 +29,4 @@ public class UserSeeder implements CommandLineRunner {
 
         userRepository.save(user1);
     }
-
-
 }
