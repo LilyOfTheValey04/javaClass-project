@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.exception.ResourceNotFound;
 import com.mapper.MaterialMapper;
 import com.model.Category;
 import com.repository.CategoryRepository;
@@ -11,9 +12,11 @@ import com.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -67,5 +70,33 @@ public class CategoryServiceTest {
         assertThat(result.getId()).isEqualTo(2L);
         assertThat(result.getName()).isEqualTo("NewCategory");
         verify(categoryRepository).save(any(Category.class));
+    }
+
+    @Test
+    void deleteCategory_whenFound() {
+        Category existing = new Category();
+        existing.setId(1L);
+        existing.setName("Books");
+        existing.setMaterials(new HashSet<>());
+
+        when(categoryRepository.findById(1L))
+                .thenReturn(Optional.of(existing));
+
+        categoryService.deleteCategory(1L);
+
+        verify(categoryRepository).findById(1L);
+        verify(categoryRepository).delete(existing);
+        verify(categoryRepository, never()).save(any());
+    }
+
+    @Test
+    void deleteCategory_whenNotFound_shouldThrow() {
+        when(categoryRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFound.class,
+                () -> categoryService.deleteCategory(1L));
+
+        verify(categoryRepository, never()).delete(any());
     }
 }
