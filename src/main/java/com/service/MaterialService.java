@@ -107,6 +107,12 @@ public class MaterialService {
         }
     }
 
+    public void increaseBackQuantity(Integer quantity, Long materialId){
+        int updatedRows = materialRepository.increaseBackStockIfAvailable(materialId, quantity);
+        if(updatedRows == 0){
+            throw new ResourceNotFound(Material.class, materialId);
+        }
+    }
     private void setMaterialCategories(Material material, Set<String> categoryNames) {
         if (categoryNames != null && !categoryNames.isEmpty()) {
             Set<Category> categories = categoryService.getCategoriesOrCreate(categoryNames);

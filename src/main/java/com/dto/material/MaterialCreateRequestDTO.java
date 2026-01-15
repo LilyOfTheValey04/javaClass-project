@@ -7,11 +7,12 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 public record MaterialCreateRequestDTO(String name,
-                                       @Size(min=0,max=1000) String description,
-                                       @NotNull @Positive Double price,
+                                       String description,
+                                       @NotNull @Positive BigDecimal price,
                                        @NotNull @PositiveOrZero Integer quantity,
                                        String author,
                                        @NotNull @Schema(description  = "Owner ID",

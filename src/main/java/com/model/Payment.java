@@ -26,9 +26,6 @@ public class Payment {
     @NonNull
     private Order order;
 
-    @Column(name = "amount")
-    private double amount;
-
     @CreationTimestamp
     @Column(name = "date_created")
     private LocalDateTime dateCreated;

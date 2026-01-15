@@ -2,16 +2,20 @@ package com.repository;
 
 import com.model.Material;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 import java.util.List;
 import java.util.Set;
 
 @Repository
 public interface MaterialRepository extends JpaRepository<Material, Long> {
+    Optional<Material> findActiveById(@Param("id") Long id);
     List<Material> findAllByOwnerId(Long ownerId);
 
     @Modifying(clearAutomatically = true)
@@ -24,6 +28,18 @@ public interface MaterialRepository extends JpaRepository<Material, Long> {
             @Param("id") Long id,
             @Param("amount") int amount
     );
+
+    @Modifying(clearAutomatically = true)
+    @Query("""
+            UPDATE Material m
+            SET m.quantity = m.quantity + :amount
+            WHERE m.id = :id 
+            """)
+    int increaseBackStockIfAvailable(
+            @Param("id") Long id,
+            @Param("amount") int amount
+    );
+
 
     @Query("""
             SELECT m

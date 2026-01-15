@@ -19,7 +19,7 @@ public class UserSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         User user1 = User.builder()
-                .admin(true)
+                .isAdmin(true)
                 .email("ivan123@gmail.com")
                 .passwordHash("123")
                 .phoneNumber("08789564")
@@ -29,6 +29,4 @@ public class UserSeeder implements CommandLineRunner {
 
         userRepository.save(user1);
     }
-
-
 }

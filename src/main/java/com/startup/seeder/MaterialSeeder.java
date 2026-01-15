@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,7 +32,7 @@ public class MaterialSeeder implements CommandLineRunner {
                 .name("The Great Gatsby")
                 .owner(userRepository.findById(1L).orElseThrow(
                         () -> new RuntimeException("Material Seeding failed! Owner not exist")))
-                .price(12.3)
+                .price(BigDecimal.valueOf(12.3))
                 .author("F. Scott Fitzgerald")
                 .categories(categoryService.getCategoriesOrCreate(Set.of("Classic", "Novel")))
                 .description("A tale of wealth, love, and the American Dream.")
@@ -42,7 +43,7 @@ public class MaterialSeeder implements CommandLineRunner {
                 .name("The Great Gatsby")
                 .owner(userRepository.findById(1L).orElseThrow(
                         () -> new RuntimeException("Material Seeding failed! Owner not exist")))
-                .price(10.3)
+                .price(BigDecimal.valueOf(10.3))
                 .author("F. Scott Fitzgerald")
                 .categories(categoryService.getCategoriesOrCreate(Set.of("Classic")))
                 .description("A tale of wealth, love, and the American Dream.")
@@ -53,7 +54,7 @@ public class MaterialSeeder implements CommandLineRunner {
                 .name("To Kill a Mockingbird")
                 .owner(userRepository.findById(1L).orElseThrow(
                         () -> new RuntimeException("Material Seeding failed! Owner not exist")))
-                .price(10.3)
+                .price(BigDecimal.valueOf(10.3))
                 .author("Harper Lee")
                 .categories(categoryService.getCategoriesOrCreate(Set.of("Southern Gothic", "Novel")))
                 .description("A powerful story about racial injustice in the South. ")

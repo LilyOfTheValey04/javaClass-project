@@ -44,7 +44,6 @@ public class GlobalExceptionHandler {
         return problemDetail;
     }
 
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ProblemDetail handleRequestObjectValidation(MethodArgumentNotValidException ex,
                                                        HttpServletRequest req){
