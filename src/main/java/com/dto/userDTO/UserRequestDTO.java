@@ -8,6 +8,4 @@ public record UserRequestDTO(@NotBlank String username,
                              String name,
                              @Email String email,
                              String phoneNumber) {
-
-
 }
