@@ -74,8 +74,11 @@ public class OrderService {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound(Order.class, id));
 
+        materialService.increaseBackQuantity(order.getQuantity(), order.getMaterial().getId());
+
         orderRepository.flush();
         orderRepository.delete(order);
+
     }
 
     private String generateOrderNumber() {
