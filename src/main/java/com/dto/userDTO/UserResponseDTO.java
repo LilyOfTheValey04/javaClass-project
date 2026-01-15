@@ -1,8 +1,4 @@
-package com.dto.UserDTO;
-
-import com.dto.material.MaterialCreateRequestDTO;
-
-import java.util.List;
+package com.dto.userDTO;
 
 public record UserResponseDTO(Long id,
                               boolean admin,
