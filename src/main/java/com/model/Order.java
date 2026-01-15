@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -40,10 +41,10 @@ public class Order {
 
     @Column(name = "price")
     @NonNull
-    private double price;
+    private BigDecimal price;
 
     @Column(name = "delivery_price", nullable = false)
-    private double deliveryPrice;
+    private BigDecimal deliveryPrice;
 
     @Column(name = "delivery_address")
     private String deliveryAddress;
