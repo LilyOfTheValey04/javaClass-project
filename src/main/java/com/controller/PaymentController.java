@@ -5,11 +5,9 @@ import com.dto.paymentDTO.PaymentResponseDTO;
 import com.mapper.PaymentMapper;
 import com.model.Payment;
 import com.service.PaymentService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -18,13 +16,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/payments")
-@Validated
+
 public class PaymentController {
     private final PaymentService paymentService;
     private final PaymentMapper paymentMapper;
 
     @PostMapping
-    public ResponseEntity<PaymentResponseDTO> createPayment(@Valid @RequestBody PaymentRequestDTO requestDTO) {
+    public ResponseEntity<PaymentResponseDTO> createPayment(@RequestBody PaymentRequestDTO requestDTO) {
         Payment payment = paymentService.createPayment(requestDTO);
         return new ResponseEntity<>(paymentMapper.toPaymentResponseDTO(payment), HttpStatus.CREATED);
     }
@@ -46,7 +44,7 @@ public class PaymentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePayment(Long id) {
+    public ResponseEntity<Void> deletePayment(@PathVariable Long id) {
         paymentService.deletePaymentById(id);
         return ResponseEntity.noContent().build();
     }
