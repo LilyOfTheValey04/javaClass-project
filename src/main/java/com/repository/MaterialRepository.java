@@ -29,6 +29,18 @@ public interface MaterialRepository extends JpaRepository<Material, Long> {
             @Param("amount") int amount
     );
 
+    @Modifying(clearAutomatically = true)
+    @Query("""
+            UPDATE Material m
+            SET m.quantity = m.quantity + :amount
+            WHERE m.id = :id 
+            """)
+    int increaseBackStockIfAvailable(
+            @Param("id") Long id,
+            @Param("amount") int amount
+    );
+
+
     @Query("""
             SELECT m
             FROM Material m

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -18,6 +18,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "materials")
+@SQLDelete(sql = "UPDATE materials SET deleted = true WHERE id = ?")
+@SQLRestriction("deleted = false")
 public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

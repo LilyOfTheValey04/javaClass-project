@@ -31,13 +31,6 @@ public class OrderController {
                 .body(orderMapper.toOrderResponseDTO(order));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<OrderResponseDTO> getOrderById(@PathVariable Long id) {
-        Order order = orderService.getOrderById(id);
-        return new ResponseEntity<>(orderMapper.toOrderResponseDTO(order), HttpStatus.OK);
-
-    }
-
     @GetMapping
     public ResponseEntity<List<OrderResponseDTO>> getAllOrders() {
         List<OrderResponseDTO> allOrders = orderService.getAllOrders()
@@ -46,6 +39,13 @@ public class OrderController {
                 .toList();
 
         return ResponseEntity.ok(allOrders);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderResponseDTO> getOrderById(@PathVariable Long id) {
+        Order order = orderService.getOrderById(id);
+        return new ResponseEntity<>(orderMapper.toOrderResponseDTO(order), HttpStatus.OK);
+
     }
 
     @DeleteMapping("/{id}")

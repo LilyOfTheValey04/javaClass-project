@@ -26,6 +26,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final MaterialRepository materialRepository;
+    private final MaterialService materialService;
 
     @Transactional
     public Order createOrder(OrderRequestDTO request) {
@@ -37,6 +38,8 @@ public class OrderService {
                 .orElseThrow(() -> new ResourceNotFound(Material.class, request.materialId()));
 
         BigDecimal totalPrice = material.getPrice().multiply(BigDecimal.valueOf(request.quantity()));
+
+       materialService.reduceQuantity(request.quantity(), request.materialId());
 
         String orderNumber = generateOrderNumber();
         Order order = Order.builder()
@@ -71,8 +74,11 @@ public class OrderService {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound(Order.class, id));
 
+        materialService.increaseBackQuantity(order.getQuantity(), order.getMaterial().getId());
+
         orderRepository.flush();
         orderRepository.delete(order);
+
     }
 
     private String generateOrderNumber() {
