@@ -13,6 +13,7 @@ import java.util.Set;
 @Setter
 @Builder
 @SQLDelete(sql = "UPDATE users SET deleted = true WHERE id = ?")
+@SQLRestriction("deleted = false")
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
@@ -42,6 +43,6 @@ public class User {
 
     @OneToMany(mappedBy = "owner",fetch = FetchType.LAZY)
     @JsonBackReference
-    @SQLRestriction("deleted = false")
+
     private Set<Material> materials;
 }
