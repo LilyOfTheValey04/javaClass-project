@@ -1,4 +1,4 @@
-package com.dto.UserDTO;
+package com.dto.userDTO;
 
 import com.dto.material.MaterialCreateRequestDTO;
 
