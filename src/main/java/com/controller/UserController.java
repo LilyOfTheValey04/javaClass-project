@@ -2,6 +2,7 @@ package com.controller;
 
 import com.dto.userDTO.UserRequestDTO;
 import com.dto.userDTO.UserResponseDTO;
+import com.dto.userDTO.UserUpdateRequestDTO;
 import com.mapper.UserMapper;
 import com.service.UserService;
 import jakarta.validation.Valid;
@@ -42,10 +43,9 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDTO> updateUser(
             @PathVariable Long id,
-            @Valid @RequestBody UserRequestDTO requestDTO
+            @RequestBody UserUpdateRequestDTO request
     ) {
-        UserResponseDTO updatedUser = userService.updateUser(id, requestDTO);
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.ok(userService.updateUser(id, request));
     }
 
     @DeleteMapping("/{id}")

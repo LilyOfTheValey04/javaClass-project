@@ -2,6 +2,7 @@ package com.service;
 
 import com.dto.userDTO.UserRequestDTO;
 import com.dto.userDTO.UserResponseDTO;
+import com.dto.userDTO.UserUpdateRequestDTO;
 import com.exception.ResourceNotFound;
 import com.mapper.UserMapper;
 import com.model.User;
@@ -47,7 +48,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponseDTO updateUser(Long id, UserRequestDTO request) {
+    public UserResponseDTO updateUser(Long id, UserUpdateRequestDTO request) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound(User.class, id));
 
