@@ -88,7 +88,7 @@ public class MaterialMapperTest {
         assertThat(existingMaterial.getName()).isEqualTo("To Kill a Mockingbird");
         assertThat(existingMaterial.getDescription()).isEqualTo("A powerful story about racial injustice in the South. ");
         assertThat(existingMaterial.getAuthor()).isEqualTo("Harper Lee");
-        assertThat(existingMaterial.getPrice()).isEqualTo(10.3);
+        assertThat(existingMaterial.getPrice()).isEqualTo(BigDecimal.valueOf(10.3));
         assertThat(existingMaterial.getQuantity()).isEqualTo(8);
     }
 
